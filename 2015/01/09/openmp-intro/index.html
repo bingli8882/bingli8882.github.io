@@ -1,0 +1,333 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>OpenMP的简单使用教程 | Bing Li&#39;s Personal Blog</title>
+  <meta name="author" content="Bing Li">
+  
+  <meta name="description" content="今天有幸参加了一个XSEDE OpenMP的workshop讲座，真是受益匪浅啊。简单来说OpenMP就是一个多线程程序的框架。和MPI相比，MPI每一个Node都有独立的内存空间，但是OpenMP所有的线程共享一个内存空间。显而易见，OpenMP的硬件制约要比MPI大，但是只要硬件跟得上就会比MPI要快。OpenMP一般都会部署再超级计算机中心，但是几年之前它就成为了一个通用标准。基本上所有的主流C/C++语言编译器都支持OpenMP（当然除了C之外，OpenMP还支持Fortran，不过这里我主要介绍一下C），这意味着只要你的计算机上安装了C的编译器你就可以直接使用OpenMP不需要额外部署任何东西。（这太方便了，想想Hadoop，当年为了部署它，我被折磨的那个叫一个销魂啊。）">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="OpenMP的简单使用教程"/>
+  <meta property="og:site_name" content="Bing Li&#39;s Personal Blog"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="Bing Li&#39;s Personal Blog" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">Bing Li&#39;s Personal Blog</a></h1>
+  <h2><a href="/"></a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">Home</a></li>
+    
+      <li><a href="/archives">Archives</a></li>
+    
+      <li><a href="/about">About</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div></header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2015-01-09T23:49:20.000Z"><a href="/2015/01/09/openmp-intro/">Jan 9 2015</a></time>
+      
+      
+  
+    <h1 class="title">OpenMP的简单使用教程</h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>今天有幸参加了一个XSEDE OpenMP的workshop讲座，真是受益匪浅啊。简单来说OpenMP就是一个多线程程序的框架。和MPI相比，MPI每一个Node都有独立的内存空间，但是OpenMP所有的线程共享一个内存空间。显而易见，OpenMP的硬件制约要比MPI大，但是只要硬件跟得上就会比MPI要快。OpenMP一般都会部署再超级计算机中心，但是几年之前它就成为了一个通用标准。基本上所有的主流<code>C/C++</code>语言编译器都支持OpenMP（当然除了C之外，OpenMP还支持Fortran，不过这里我主要介绍一下C），这意味着只要你的计算机上安装了<code>C</code>的编译器你就可以直接使用OpenMP不需要额外部署任何东西。（这太方便了，想想Hadoop，当年为了部署它，我被折磨的那个叫一个销魂啊。）</p>
+<a id="more"></a>
+<p>##编写OpenMP程序</p>
+<p>编写OpenMP的程序并不需要额外的学习很多东西，其实就是普通的C代码加上一些Directives。用Hello World为例：</p>
+<pre><code><span class="preprocessor">#<span class="keyword">include</span><span class="string">&lt;stdio.h&gt;</span></span>
+<span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc,<span class="keyword">char</span>** argv)</span></span>{
+  <span class="built_in">printf</span>(<span class="string">"Hello World!\n"</span>);
+  <span class="keyword">return</span> <span class="number">0</span>;
+}
+</code></pre><p>这是一个最简单的程序，编译执行后的输出是。</p>
+<pre><code><span class="title">Hello</span> World！
+</code></pre><p>然后我们给他加上OpenMP的directive，他就变成了。</p>
+<pre><code><span class="preprocessor">#<span class="keyword">include</span><span class="string">&lt;stdio.h&gt;</span></span>
+<span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc,<span class="keyword">char</span>** argv)</span></span>{
+  <span class="preprocessor">#<span class="keyword">pragma</span> omp parallel</span>
+  <span class="built_in">printf</span>(<span class="string">"Hello World!\n"</span>);
+  <span class="keyword">return</span> <span class="number">0</span>;
+}
+</code></pre><p>看到没？就是简单的加了一句话<code>#pragma omp parallel</code>，若是正常编译的话，这句话会被忽略一点都不影响你的程序，只有调用OpenMP的lib编译的时候才会编译成OpenMP的版本。以<code>GCC</code>为例，OpenMP的编译方法是：</p>
+<pre><code>gcc -o hello hello<span class="class">.c</span> -fopenmp
+</code></pre><p>仅仅多了一个<code>-fopenmp</code>的flag，太简单了。现在我们试试效果，这个<code>hello world</code>的输出结果变成了：</p>
+<pre><code><span class="title">Hello</span> World！
+Hello World！
+Hello World！
+Hello World！
+Hello World！
+Hello World！
+Hello World！
+Hello World！
+</code></pre><p>输出了8次<code>Hello World！</code>。这是为什么呢？原因是那个directive之后的代码被多线程操作了，默认情况下<code>GCC</code>的<code>-fopenmp</code>flag会调用和你CPU内核数相同数量的线程来执行程序。这个线程数量是可以控制，只需要修改环境变量中<code>OMP_NUM_THREADS</code>参数，例如：</p>
+<pre><code><span class="keyword">export</span> OMP_NUM_THREADS=<span class="number">2</span>
+</code></pre><p>之后也不需要重新编译，直接执行之前的程序，就会发现<code>Hello World！</code>的数量变成了两个了。</p>
+<p>###for循环</p>
+<p>大多数情况下，我们主要会将多线程技术应用在循环中而不是全部代码。OpenMP主要被应用于for循环的多线程处理，这主要还是因为for循环比较容易控制。当然如果你非要用在while循环上也不是不可以，只不过要大量修改你的代码然后用一个block来圈在while之外，总之是一个比较另类的操作了。我在此就不多说了。用一个最简单的例子，找寻1到10000中最大的数字。当然这个例子很白痴，但是代码简洁比较好理解。</p>
+<pre><code><span class="preprocessor">#<span class="keyword">include</span><span class="string">&lt;stdio.h&gt;</span></span>
+<span class="built_in">int</span> main(<span class="built_in">int</span> argc, char** argv){
+  <span class="built_in">int</span> i<span class="comment">;</span>
+  <span class="built_in">int</span> <span class="built_in">max</span> = <span class="number">0</span><span class="comment">;</span>
+  <span class="preprocessor">#<span class="keyword">pragma</span> omp parallel for</span>
+  <span class="keyword">for</span>(i=<span class="number">0</span><span class="comment">;i&lt;=10000;i++){</span>
+    <span class="keyword">if</span>(i&gt;<span class="built_in">max</span>)<span class="built_in">max</span>=i<span class="comment">;</span>
+  }
+  printf(<span class="string">"%d\n"</span>,<span class="built_in">max</span>)<span class="comment">;</span>
+}
+</code></pre><p>结果是：</p>
+<pre><code><span class="number">10000</span>
+</code></pre><p>我们在directive里面加了一个<code>for</code>，变成了<code>#pragma omp parallel for</code>，这样的话OpenMP就只会把下面的for循环进行多线程处理，所以我们只看到了一个输出而不是好几个。</p>
+<p>这里有一点一定要主要，将要进行多线程处理的for循环一定是独立的（independent），也就是说下面这种情况是不可以的。</p>
+<pre><code><span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;<span class="number">10000</span>;i++){
+  a[i] = a[i-<span class="number">1</span>]+<span class="number">1</span>;
+}
+</code></pre><p>每一次循环都需要之前的结果，这种循环没有办法进行多线程处理，因为每一次都要等待之前的输出，强行处理还会出错。</p>
+<p>####private参数</p>
+<p>细心的话，也许你会有一个问题。那就是循环只有一个迭代器（通常是变量<code>i</code>），但进行多线程处理的时候，这个迭代器会不会被各个线程互相扯皮？这却是是一个问题，如果这个迭代器仅仅用作计数的话可能还不是什么大问题，但是如果这个变量也参与运算，这就麻烦了，所有OpenMP引入了private参数，用来告诉编译器那些变量需要有一个本地的实例。这个参数用于迭代器的话就变成了下面的例子。</p>
+<pre><code><span class="preprocessor">#<span class="keyword">pragma</span> omp parallel for private(i)</span>
+<span class="keyword">for</span>(i=<span class="number">0</span><span class="comment">;i&lt;10000;i++){</span>
+  ...
+}
+</code></pre><p>这样的话每个线程都有自己的<code>i</code>拷贝，就不会冲突了。当然这个参数的用途很广，这仅仅是一个简单的例子。但事实上基本上每次对循环进行多线程处理的时候都需要拷贝迭代器，因此可以把<code>for private（）</code>这样连起来记忆，不容易忘。</p>
+<p>####reduction参数</p>
+<p>我们回到之前的那个10000以内最大整数的例子。之前我提到了循环一定不能互相关联，否则不是效率低下（还不如单线程），就是出错误。这个例子其实就是一个反面典型，就是因为<code>max</code>这个变量。循环的每一步都会读取之前的结果来参与计算。可是针对<code>max</code>变量的这个例子，我们还是有解决办法的。</p>
+<p>如果我们环境变量设置线程数为2，这个循环的前5000项和后5000项将分别在两个不同的线程中处理，也就是一份为二。我们需要的是所有数值中的最大值，换一个角度想。我们可以在前5000项和后5000项分别算出最大值，然后在对这两个结果进行比较取最大值，这样的话我们同样完成了寻找最大值的目的同时还可以多线程处理。</p>
+<p>那么怎样做到呢？这个时候我们就需要reduction这个参数。reduction就是让某些变量先在各自的线程中独自计算，然后在循环结束时在合并。那么我们用这个参数来修改之前的例子：</p>
+<pre><code><span class="preprocessor">#<span class="keyword">include</span><span class="string">&lt;stdio.h&gt;</span></span>
+<span class="built_in">int</span> main(<span class="built_in">int</span> argc, char** argv){
+  <span class="built_in">int</span> i<span class="comment">;</span>
+  <span class="built_in">int</span> <span class="built_in">max</span> = <span class="number">0</span><span class="comment">;</span>
+  <span class="preprocessor">#<span class="keyword">pragma</span> omp parallel for private(i) reduction(max:max)</span>
+  <span class="keyword">for</span>(i=<span class="number">0</span><span class="comment">;i&lt;=10000;i++){</span>
+    <span class="keyword">if</span>(i&gt;<span class="built_in">max</span>)<span class="built_in">max</span>=i<span class="comment">;</span>
+  }
+  printf(<span class="string">"%d\n"</span>,<span class="built_in">max</span>)<span class="comment">;</span>
+}
+</code></pre><p>这下就变成了完整版。reduction这个函数格式是<code>reduction(operation:variable)</code>,冒号前面的是操作类型，冒号后面的是变量名。目前reduction这个函数只支持如下几个操作：</p>
+<ul>
+<li><code>+</code>（初始值是0）</li>
+<li><code>-</code>（初始值是0）</li>
+<li><code>max</code>（初始值是最小值）</li>
+<li><code>min</code>（初始值是最大值）</li>
+<li><code>Bit(&amp;,|,^,iand,ior)</code>（初始值是～0,0）</li>
+<li><code>Logical(&amp;&amp;,||,.and.,.or.)</code>（初始值是0,1，.true.,.false.）</li>
+</ul>
+<p>##编译与执行</p>
+<p>其实之前已经提到了如何编译和执行。今天有幸在超计算机中心的服务器上面测试了几次，然后回到本地计算机试了一下，发现本地执行简单的多。因为本地执行就是简单的<code>./program</code>。Windows下的话你可以试试双击。在服务器上面跑还要考虑调度多少node和多少core，但是在本地不需要提供任何额外的参数就和执行普通程序一样。所以说OpenMP真是多线程计算一大神器啊，主要还是操作简单。</p>
+<p>之前提到了现在主流的<code>C/C++</code>编译器都已经支持OpenMP了，那么都有那些编译器呢？我在这里给出一个列表。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">编译器</th>
+<th style="text-align:center">参数</th>
+<th style="text-align:center">不设置环境变量时的初始值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">GNU (gcc, g++, gfortran)</td>
+<td style="text-align:center">-fopenmp</td>
+<td style="text-align:center">与CPU内核数相同数量的线程</td>
+</tr>
+<tr>
+<td style="text-align:center">Intel (icc ifort)</td>
+<td style="text-align:center">-openmp</td>
+<td style="text-align:center">与CPU内核数相同数量的线程</td>
+</tr>
+<tr>
+<td style="text-align:center">Portland Group (pgcc,pgCC,pgf77,pgf90)</td>
+<td style="text-align:center">-mp</td>
+<td style="text-align:center">只使用一个线程</td>
+</tr>
+</tbody>
+</table>
+<p>顺便在提一下，环境变量是控制线程数的环境变量是<code>OMP_NUM_THREADS</code>。</p>
+<p>###参考文献</p>
+<ul>
+<li><a href="http://psc.edu/index.php/hpc-workshop-series/openmp-january-2015" target="_blank" rel="external">XSEDE HPC Workshop: Open MP</a></li>
+<li><a href="https://www.dartmouth.edu/~rc/classes/intro_openmp/compile_run.html" target="_blank" rel="external">How to compile and run openMP program</a></li>
+</ul>
+
+      
+    </div>
+    <footer>
+      
+        
+  
+  <div class="categories">
+    <a href="/categories/Programming-Languages/">Programming Languages</a>
+  </div>
+
+        
+  
+  <div class="tags">
+    <a href="/tags/C/">C</a>, <a href="/tags/OpenMP/">OpenMP</a>
+  </div>
+
+        
+  <div class="addthis addthis_toolbox addthis_default_style">
+    
+      <a class="addthis_button_facebook_like" fb:like:layout="button_count"></a>
+    
+    
+      <a class="addthis_button_tweet"></a>
+    
+    
+      <a class="addthis_button_google_plusone" g:plusone:size="medium"></a>
+    
+    
+      <a class="addthis_button_pinterest_pinit" pi:pinit:layout="horizontal"></a>
+    
+    <a class="addthis_counter addthis_pill_style"></a>
+  </div>
+  <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js"></script>
+
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+<section id="comment">
+  <h1 class="title">留言</h1>
+
+  
+      <div id="fb-root"></div>
+<script>
+  (function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=123456789012345";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));
+</script>
+
+<div class="fb-comments" data-href="http://binglispace.com/2015/01/09/openmp-intro/index.html" data-num-posts="5" data-width="840" data-colorscheme="light"></div>
+      
+  
+</section>
+
+</div></div>
+    <aside id="sidebar" class="alignright">
+  <div class="search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="搜索">
+    <input type="hidden" name="q" value="site:binglispace.com">
+  </form>
+</div>
+
+  
+<div class="widget tag">
+  <h3 class="title">分类</h3>
+  <ul class="entry">
+  
+    <li><a href="/categories/Equipment-Software-Reviews/">Equipment &amp; Software Reviews</a><small>4</small></li>
+  
+    <li><a href="/categories/Operating-Systems/">Operating Systems</a><small>2</small></li>
+  
+    <li><a href="/categories/Others/">Others</a><small>3</small></li>
+  
+    <li><a href="/categories/Programming-Languages/">Programming Languages</a><small>7</small></li>
+  
+  </ul>
+</div>
+
+
+  
+<div class="widget tag">
+  <h3 class="title">标签</h3>
+  <ul class="entry">
+  
+    <li><a href="/tags/Android-Wear/">Android Wear</a><small>1</small></li>
+  
+    <li><a href="/tags/Atom/">Atom</a><small>1</small></li>
+  
+    <li><a href="/tags/C/">C</a><small>1</small></li>
+  
+    <li><a href="/tags/Chrome/">Chrome</a><small>1</small></li>
+  
+    <li><a href="/tags/Fedora/">Fedora</a><small>2</small></li>
+  
+    <li><a href="/tags/GitHub/">GitHub</a><small>1</small></li>
+  
+    <li><a href="/tags/Hexo/">Hexo</a><small>2</small></li>
+  
+    <li><a href="/tags/IDE/">IDE</a><small>1</small></li>
+  
+    <li><a href="/tags/Linux/">Linux</a><small>1</small></li>
+  
+    <li><a href="/tags/Moto360/">Moto360</a><small>1</small></li>
+  
+    <li><a href="/tags/OpenMP/">OpenMP</a><small>1</small></li>
+  
+    <li><a href="/tags/Play-Framework/">Play Framework</a><small>1</small></li>
+  
+    <li><a href="/tags/Python/">Python</a><small>5</small></li>
+  
+    <li><a href="/tags/Scala/">Scala</a><small>2</small></li>
+  
+    <li><a href="/tags/Smart-Watch/">Smart Watch</a><small>1</small></li>
+  
+  </ul>
+</div>
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2015 Bing Li
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+</body>
+</html>

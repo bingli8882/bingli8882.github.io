@@ -1,0 +1,264 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Ubuntu上安装配置Chrome Remote Desktop | Bing Li&#39;s Personal Blog</title>
+  <meta name="author" content="Bing Li">
+  
+  <meta name="description" content="Google官方的Chrome Remote Desktop是一个非常不错的远程桌面系统。他可以通过Google Account 链接任何地方的计算机，实现远程操作，并且支持Windows，Mac和Linux。特别是配合ChromeBook使用的话，大大增强了ChromeBook的扩展性。性能与便携性、电池寿命一直是笔记本电脑的主要矛盾。ChromeBook是未来笔记本电脑一个不错的发展方向，将主要运算放在云端，随身设备仅仅作为一个接入点。即满足了便携性又不用过于顾及性能，一举两得。可是就目前而言，很多情况下，用户仍然无法完全抛弃传统电脑，那么远程桌面，虚拟机之流就成为了一个不错的解决办法。本文讲简单介绍Chrome Remote Desktop在Ubuntu Linux上的安装方法。">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="Ubuntu上安装配置Chrome Remote Desktop"/>
+  <meta property="og:site_name" content="Bing Li&#39;s Personal Blog"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="Bing Li&#39;s Personal Blog" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">Bing Li&#39;s Personal Blog</a></h1>
+  <h2><a href="/"></a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">Home</a></li>
+    
+      <li><a href="/archives">Archives</a></li>
+    
+      <li><a href="/about">About</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div></header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2015-01-02T06:02:00.000Z"><a href="/2015/01/02/chrome-remote-desktop/">Jan 2 2015</a></time>
+      
+      
+  
+    <h1 class="title">Ubuntu上安装配置Chrome Remote Desktop</h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>Google官方的Chrome Remote Desktop是一个非常不错的远程桌面系统。他可以通过Google Account 链接任何地方的计算机，实现远程操作，并且支持Windows，Mac和Linux。特别是配合ChromeBook使用的话，大大增强了ChromeBook的扩展性。性能与便携性、电池寿命一直是笔记本电脑的主要矛盾。ChromeBook是未来笔记本电脑一个不错的发展方向，将主要运算放在云端，随身设备仅仅作为一个接入点。即满足了便携性又不用过于顾及性能，一举两得。可是就目前而言，很多情况下，用户仍然无法完全抛弃传统电脑，那么远程桌面，虚拟机之流就成为了一个不错的解决办法。本文讲简单介绍Chrome Remote Desktop在Ubuntu Linux上的安装方法。</p>
+<a id="more"></a>
+<p>在安装Remote Desktop之前需要安装官方的Chrome浏览器，这个很简单可以去<a href="https://www.google.com/intl/en/chrome/browser/desktop/index.html" target="_blank" rel="external">Chrome</a>的主页现在deb安装包。下载完成后双击安装就可以了。</p>
+<p>然后登陆Chrome App Store安装Remote Desktop。安装完成后打开app，然后登陆google account之后，你会看到两个选项。</p>
+<ul>
+<li>Remote Assistance</li>
+<li>My Computer</li>
+</ul>
+<p>##与他人共享电脑</p>
+<p><code>Remote Assistance</code>是让任意两台计算机相连。比如你去连接你朋友的电脑，或者你朋友连接你的电脑。首先由被连接的一方点击<code>Share</code>按钮，然后你会看到下图的弹出窗口。</p>
+<p><img src="http://i.imgur.com/5tBmle0.png" alt="Share"></p>
+<p>中间的一串数字就是你计算机的临时ID，你将这串数字告诉需要连接你电脑的人，他们就就可以使用它来找到你的电脑。不必担心安全问题，这串数字是随机生成的，当你不需要连接的时候，关闭这个app，别人就找不到你的计算机了，而下次在共享你的计算机时，你会获得另外一串数字。</p>
+<p>如果需要连接另一台计算机，你需要点击<code>Access</code>按钮，然后会弹出如下窗口。</p>
+<p><img src="http://i.imgur.com/GA67Y32.png" alt="Access"></p>
+<p>输入对方的那串数字你就可以连接对方的电脑了。</p>
+<p>##配置自己的电脑</p>
+<p>如果你需要远程连接你自己家的电脑，这样很不方便。若是无人在被叫电脑前值守，你根本无法完成连接。因为就算你连接上了，每隔几分钟，Chrome就会自动询问是否还要继续让别人连接你的电脑，若是无人应答，连接窗口就会锁死。</p>
+<p>所以如果你想在无人值守的情况下连接自己的电脑，你就需要第二种方法。那就是使用第二个选项<code>My Computer</code>。首先需要配置你需要被连接的电脑，然后就可以使用你自己的Google账号在任何地方都可以登陆你的计算机。</p>
+<p>以Ubuntu为例，首先你需要下载安装Chrome Remote Desktop的本地安装包，<a href="http://dl.google.com/linux/direct/chrome-remote-desktop_current_amd64.deb" target="_blank" rel="external">64位的deb安装包</a>,<a href="http://dl.google.com/linux/direct/chrome-remote-desktop_current_i386.deb" target="_blank" rel="external">32位的deb安装包</a>。</p>
+<p>安装完成后，你还需要进行一些配置。</p>
+<p>首先你需要在你的<code>home</code>文件夹里创建 <code>.chrome-remote-desktop-session</code>文件。</p>
+<p>然后去这个文件夹<code>/usr/share/xsessions/</code>里面查看你desktop的启动命令。</p>
+<p>以我的计算机为例。</p>
+<pre><code>cd <span class="regexp">/usr/</span>share<span class="regexp">/xsessions/</span>
+ls
+</code></pre><p>之后我会看到如下的结果。</p>
+<pre><code><span class="tag">pantheon</span><span class="class">.desktop</span>
+</code></pre><p>在这个文件夹里面只有<code>pantheon.desktop</code>文件(你的电脑可能会是其他的文件名)，用<code>vim</code>或者<code>gedit</code>之类的编辑器打开这个文件，找到一行以<code>Exec</code>开头的代码。我的是这样的。</p>
+<pre><code>Exec=gnome-session <span class="comment">--session=pantheon</span>
+</code></pre><p>记住<code>=</code>之后的部分，然后打开你之前创建的<code>.chrome-remote-desktop-session</code>，然后输入下列代码。</p>
+<pre><code><span class="built_in">exec</span> /usr/sbin/lightdm-session <span class="string">"gnome-session --session=pantheon"</span>
+</code></pre><p>双引号之内的部分就上一个文件<code>=</code>之后的部分。</p>
+<p>这时候在打开Chrome Remote Desktop，你就能看到 <code>Enable remote connections.</code>的选项。点击这个选项然后配置你的PIN码。之后你在其他电脑上打开Chrome Remote Desktop然后登陆你的Google账号就能看到你之前配置好的电脑显示在<code>My Computer</code>之列了。选择它输入PIN码就能实现远程连接了。</p>
+<p>##调整分辨率</p>
+<p>连接之后你可能会遇到分辨率看着很不爽的问题。Chrome Remote Desktop在连接自己的电脑时，是创建一个虚拟的session。虽然它仍然使用着你在电脑上的账号，但是却有自己的profile，是一个虚拟机。默认的分辨率是<code>1600×1200</code>，估计现在很少有人的显示器分辨率是这个数值，那么怎么更改分辨率呢？其实只需要在你profile里面加一行代码就可以了。</p>
+<p>进入自己的<code>home</code>文件夹，打开<code>.profile</code>文件。在最后添加如下代码：</p>
+<pre><code><span class="keyword">export</span> CHROME_REMOTE_DESKTOP_DEFAULT_DESKTOP_SIZES=<span class="number">1366</span>x768
+</code></pre><p>我的的分辨率是<code>1366*768</code>，大家可以根据自己显示器的分辨率自行调配。完成配置之后，你需要重启service。</p>
+<pre><code>sudo /etc/init.d/chrome-remote-desktop <span class="operator"><span class="keyword">stop</span>
+sudo /etc/init.<span class="keyword">d</span>/chrome-remote-desktop <span class="keyword">start</span></span>
+</code></pre><p>或者重启电脑也可以。</p>
+<p>###参考文献</p>
+<ol>
+<li><p><a href="https://support.google.com/chrome/answer/1649523?hl=en" target="_blank" rel="external">Chrome Remote Desktop帮助文件</a></p>
+</li>
+<li><p><a href="http://www.gadgetdetail.com/google-chrome-remote-desktop-linux-beta-ready-testing" target="_blank" rel="external">Google Chrome Remote Desktop for Linux beta is ready for testing</a></p>
+</li>
+</ol>
+
+      
+    </div>
+    <footer>
+      
+        
+  
+  <div class="categories">
+    <a href="/categories/Equipment-Software-Reviews/">Equipment & Software Reviews</a>
+  </div>
+
+        
+  
+  <div class="tags">
+    <a href="/tags/Chrome/">Chrome</a>
+  </div>
+
+        
+  <div class="addthis addthis_toolbox addthis_default_style">
+    
+      <a class="addthis_button_facebook_like" fb:like:layout="button_count"></a>
+    
+    
+      <a class="addthis_button_tweet"></a>
+    
+    
+      <a class="addthis_button_google_plusone" g:plusone:size="medium"></a>
+    
+    
+      <a class="addthis_button_pinterest_pinit" pi:pinit:layout="horizontal"></a>
+    
+    <a class="addthis_counter addthis_pill_style"></a>
+  </div>
+  <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js"></script>
+
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+<section id="comment">
+  <h1 class="title">留言</h1>
+
+  
+      <div id="fb-root"></div>
+<script>
+  (function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=123456789012345";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));
+</script>
+
+<div class="fb-comments" data-href="http://binglispace.com/2015/01/02/chrome-remote-desktop/index.html" data-num-posts="5" data-width="840" data-colorscheme="light"></div>
+      
+  
+</section>
+
+</div></div>
+    <aside id="sidebar" class="alignright">
+  <div class="search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="搜索">
+    <input type="hidden" name="q" value="site:binglispace.com">
+  </form>
+</div>
+
+  
+<div class="widget tag">
+  <h3 class="title">分类</h3>
+  <ul class="entry">
+  
+    <li><a href="/categories/Equipment-Software-Reviews/">Equipment &amp; Software Reviews</a><small>4</small></li>
+  
+    <li><a href="/categories/Operating-Systems/">Operating Systems</a><small>2</small></li>
+  
+    <li><a href="/categories/Others/">Others</a><small>3</small></li>
+  
+    <li><a href="/categories/Programming-Languages/">Programming Languages</a><small>7</small></li>
+  
+  </ul>
+</div>
+
+
+  
+<div class="widget tag">
+  <h3 class="title">标签</h3>
+  <ul class="entry">
+  
+    <li><a href="/tags/Android-Wear/">Android Wear</a><small>1</small></li>
+  
+    <li><a href="/tags/Atom/">Atom</a><small>1</small></li>
+  
+    <li><a href="/tags/C/">C</a><small>1</small></li>
+  
+    <li><a href="/tags/Chrome/">Chrome</a><small>1</small></li>
+  
+    <li><a href="/tags/Fedora/">Fedora</a><small>2</small></li>
+  
+    <li><a href="/tags/GitHub/">GitHub</a><small>1</small></li>
+  
+    <li><a href="/tags/Hexo/">Hexo</a><small>2</small></li>
+  
+    <li><a href="/tags/IDE/">IDE</a><small>1</small></li>
+  
+    <li><a href="/tags/Linux/">Linux</a><small>1</small></li>
+  
+    <li><a href="/tags/Moto360/">Moto360</a><small>1</small></li>
+  
+    <li><a href="/tags/OpenMP/">OpenMP</a><small>1</small></li>
+  
+    <li><a href="/tags/Play-Framework/">Play Framework</a><small>1</small></li>
+  
+    <li><a href="/tags/Python/">Python</a><small>5</small></li>
+  
+    <li><a href="/tags/Scala/">Scala</a><small>2</small></li>
+  
+    <li><a href="/tags/Smart-Watch/">Smart Watch</a><small>1</small></li>
+  
+  </ul>
+</div>
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2015 Bing Li
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+</body>
+</html>

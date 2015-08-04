@@ -1,0 +1,263 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Fedora21安装Nvidia的闭源驱动 | Bing Li&#39;s Personal Blog</title>
+  <meta name="author" content="Bing Li">
+  
+  <meta name="description" content="经过一天的奋战，终于把Nvidia的显卡驱动给装上了。太不容易了，这期间我至少重装了四次系统。果然显卡驱动是Linux的硬伤啊。而且Fedora的中文资料确实比Ubuntu少太多了。最后还是在Fedora的英文社区里面找到了一个完整可用的方法。之前一直尝试安装开源驱动但是都失败了，所以最后只能装闭源驱动了。别的不多说了，我直接把方法翻译过来吧。">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="Fedora21安装Nvidia的闭源驱动"/>
+  <meta property="og:site_name" content="Bing Li&#39;s Personal Blog"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="Bing Li&#39;s Personal Blog" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">Bing Li&#39;s Personal Blog</a></h1>
+  <h2><a href="/"></a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">Home</a></li>
+    
+      <li><a href="/archives">Archives</a></li>
+    
+      <li><a href="/about">About</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div></header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2015-02-21T17:26:27.000Z"><a href="/2015/02/21/fedora21-nvidia/">Feb 21 2015</a></time>
+      
+      
+  
+    <h1 class="title">Fedora21安装Nvidia的闭源驱动</h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>经过一天的奋战，终于把Nvidia的显卡驱动给装上了。太不容易了，这期间我至少重装了四次系统。果然显卡<br>驱动是Linux的硬伤啊。而且Fedora的中文资料确实比Ubuntu少太多了。最后还是在Fedora的英文社区里面<br>找到了一个完整可用的方法。之前一直尝试安装开源驱动但是都失败了，所以最后只能装闭源驱动了。别的不多<br>说了，我直接把方法翻译过来吧。</p>
+<a id="more"></a>
+<p>提示：以下内容直接进入<code>root</code>操作，要是不想进<code>root</code>就自行加<code>sudo</code>。</p>
+<ol>
+<li><p>前置</p>
+<p> 在安装之前我建议先全面更新一下啊，否安装完之后在更新可能会导致你要重新安装一遍！更新命令是：</p>
+<pre><code><span class="title">yum</span> update
+</code></pre><p> 更新完之后才开始进入我们的正式安装阶段。首先要安装一下需要的包。</p>
+<pre><code>yum <span class="keyword">install</span> gcc kernel-devel-$(uname -r)
+</code></pre><p> 然后你要去Nvidia的官网下载和你显卡对应的Linux驱动文件，这个就自行解决吧，下载到<code>Download</code><br> 文件夹备用。</p>
+</li>
+<li><p>干掉自带的nouveau驱动</p>
+<p> 先把他添加到黑名单中，然后block住他。</p>
+<pre><code>echo <span class="string">"blacklist nouveau"</span> <span class="prompt">&gt;&gt; </span>/etc/modprobe.d/blacklist.conf
+</code></pre><p> 然后在<code>/etc/sysconfig/grub</code>文件中找到<code>GRUB_CMDLINE_LINUX=</code>这一行，在其中添加 <code>rd.driver.blacklist=nouveau</code>，比如添加完成后我的文件中这一行就变了这样：</p>
+<pre><code><span class="setting">GRUB_CMDLINE_LINUX=<span class="value"><span class="string">"rd.driver.blacklist=nouveau rhgb quiet"</span></span></span>
+</code></pre><p> 这个可是因人而异的，我的文件就和我在论坛上找到那个资料不一样。所以你可别直接复制粘贴，只要把需要<br> 的那一句添加到这一行中间就行。</p>
+<p> 然后我们要激活一下：</p>
+<pre><code>grub2-mkconfig -o <span class="regexp">/boot/g</span>rub2<span class="regexp">/grub.cfg</span>
+</code></pre><p> 最后我们就可以把nouveau的驱动卸载了。</p>
+<pre><code>yum <span class="keyword">remove</span> xorg-x11-drv-nouveau.x86_64
+</code></pre></li>
+<li><p>关闭图形界面</p>
+<p> 这个简单，直接输入这行命令就行。</p>
+<pre><code>systemctl <span class="operator"><span class="keyword">set</span>-<span class="keyword">default</span> multi-<span class="keyword">user</span>.target</span>
+</code></pre><p> 然后重启计算机：</p>
+<pre><code>reboot
+</code></pre></li>
+<li><p>安装驱动</p>
+<p> 重启之后应该就是进入了没有图形界面的系统，登录<code>root</code>之后到你之前存放Nvidia官网下载的驱动的文件夹。<br> 默认情况下这个安装程序应该是没有执行权限的，所以要修改一下权限：</p>
+<pre><code><span class="keyword">chmod</span> +<span class="keyword">x</span> “你下载的程序名字”
+</code></pre><p> 然后直接运行这个程序：</p>
+<pre><code>./你下载的程序名
+</code></pre><p> 一路全选<code>yes</code>或者<code>ok</code>完成安装。</p>
+</li>
+<li><p>开启图形界面</p>
+<p> 继续敲命令：</p>
+<pre><code>systemctl <span class="keyword">set</span>-<span class="keyword">default</span> graphical.target
+</code></pre><p> 最后重启计算机：</p>
+<pre><code>reboot
+</code></pre></li>
+</ol>
+<p>如果一切顺利的话，重启之后你就可以正常进入Fedora。看看你的系统属性，Nvidia的驱动应该已经安装好了。<br>其实到这一步只要你开机不黑屏，能够进入登录界面，基本上就已经成功了。不过Linux系统很难说，变数太多，<br>我能用的方法未必人人都能用。就像之前我在网上找到的那几个方法。每一个提供者都说能用，可是我还是一次一次的失败。<br>所以大家尝试新方法之前要做好备份，失败了就重装好了。昨晚我就自我安慰说，其实自带的那个驱动也能凑合用了，<br>你又不玩游戏，又不用GPU运算，何必比自己搞得跟强迫症患者一样非要安装别的驱动呢。</p>
+<p>###参考文献</p>
+<ul>
+<li><a href="http://forums.fedoraforum.org/showthread.php?t=301931" target="_blank" rel="external">NVidia Linux driver manual install + Fedora 21 = quiet NVidia GTX 980 fans + high res</a></li>
+</ul>
+
+      
+    </div>
+    <footer>
+      
+        
+  
+  <div class="categories">
+    <a href="/categories/Operating-Systems/">Operating Systems</a>
+  </div>
+
+        
+  
+  <div class="tags">
+    <a href="/tags/Fedora/">Fedora</a>
+  </div>
+
+        
+  <div class="addthis addthis_toolbox addthis_default_style">
+    
+      <a class="addthis_button_facebook_like" fb:like:layout="button_count"></a>
+    
+    
+      <a class="addthis_button_tweet"></a>
+    
+    
+      <a class="addthis_button_google_plusone" g:plusone:size="medium"></a>
+    
+    
+      <a class="addthis_button_pinterest_pinit" pi:pinit:layout="horizontal"></a>
+    
+    <a class="addthis_counter addthis_pill_style"></a>
+  </div>
+  <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js"></script>
+
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+<section id="comment">
+  <h1 class="title">留言</h1>
+
+  
+      <div id="fb-root"></div>
+<script>
+  (function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=123456789012345";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));
+</script>
+
+<div class="fb-comments" data-href="http://binglispace.com/2015/02/21/fedora21-nvidia/index.html" data-num-posts="5" data-width="840" data-colorscheme="light"></div>
+      
+  
+</section>
+
+</div></div>
+    <aside id="sidebar" class="alignright">
+  <div class="search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="搜索">
+    <input type="hidden" name="q" value="site:binglispace.com">
+  </form>
+</div>
+
+  
+<div class="widget tag">
+  <h3 class="title">分类</h3>
+  <ul class="entry">
+  
+    <li><a href="/categories/Equipment-Software-Reviews/">Equipment &amp; Software Reviews</a><small>4</small></li>
+  
+    <li><a href="/categories/Operating-Systems/">Operating Systems</a><small>2</small></li>
+  
+    <li><a href="/categories/Others/">Others</a><small>3</small></li>
+  
+    <li><a href="/categories/Programming-Languages/">Programming Languages</a><small>7</small></li>
+  
+  </ul>
+</div>
+
+
+  
+<div class="widget tag">
+  <h3 class="title">标签</h3>
+  <ul class="entry">
+  
+    <li><a href="/tags/Android-Wear/">Android Wear</a><small>1</small></li>
+  
+    <li><a href="/tags/Atom/">Atom</a><small>1</small></li>
+  
+    <li><a href="/tags/C/">C</a><small>1</small></li>
+  
+    <li><a href="/tags/Chrome/">Chrome</a><small>1</small></li>
+  
+    <li><a href="/tags/Fedora/">Fedora</a><small>2</small></li>
+  
+    <li><a href="/tags/GitHub/">GitHub</a><small>1</small></li>
+  
+    <li><a href="/tags/Hexo/">Hexo</a><small>2</small></li>
+  
+    <li><a href="/tags/IDE/">IDE</a><small>1</small></li>
+  
+    <li><a href="/tags/Linux/">Linux</a><small>1</small></li>
+  
+    <li><a href="/tags/Moto360/">Moto360</a><small>1</small></li>
+  
+    <li><a href="/tags/OpenMP/">OpenMP</a><small>1</small></li>
+  
+    <li><a href="/tags/Play-Framework/">Play Framework</a><small>1</small></li>
+  
+    <li><a href="/tags/Python/">Python</a><small>5</small></li>
+  
+    <li><a href="/tags/Scala/">Scala</a><small>2</small></li>
+  
+    <li><a href="/tags/Smart-Watch/">Smart Watch</a><small>1</small></li>
+  
+  </ul>
+</div>
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2015 Bing Li
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+</body>
+</html>

@@ -1,0 +1,271 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>python学习笔记之全局变量 | Bing Li&#39;s Personal Blog</title>
+  <meta name="author" content="Bing Li">
+  
+  <meta name="description" content="我一直对Python的namespace感到困惑，因为Python的变量不需要声明变量类型。以往在C或者Java这种程序语言中，声明变量的位置决定了变量作用域。但是Python不用声明，这就存在一个问题，怎样区分局部变量和全局变量？这个问题困扰我一段时间了，我也一直懒得去研究，反正写Java时养成了不用全局变量的好习惯。（事实上Java也没有全局变量，怎么着也要封装在一个Class里面。）今天闲来无事就小研究了一下并做了一些小试验，总算是弄明白了。">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="python学习笔记之全局变量"/>
+  <meta property="og:site_name" content="Bing Li&#39;s Personal Blog"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="Bing Li&#39;s Personal Blog" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">Bing Li&#39;s Personal Blog</a></h1>
+  <h2><a href="/"></a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">Home</a></li>
+    
+      <li><a href="/archives">Archives</a></li>
+    
+      <li><a href="/about">About</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div></header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2015-01-19T03:41:27.000Z"><a href="/2015/01/18/python-global-variable/">Jan 18 2015</a></time>
+      
+      
+  
+    <h1 class="title">python学习笔记之全局变量</h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>我一直对Python的namespace感到困惑，因为Python的变量不需要声明变量类型。以往在C或者Java这种程序语言中，声明变量的位置决定了变量作用域。但是Python不用声明，这就存在一个问题，怎样区分局部变量和全局变量？这个问题困扰我一段时间了，我也一直懒得去研究，反正写Java时养成了不用全局变量的好习惯。（事实上Java也没有全局变量，怎么着也要封装在一个Class里面。）今天闲来无事就小研究了一下并做了一些小试验，总算是弄明白了。</p>
+<a id="more"></a>
+<p>##关键字：Global</p>
+<p>首先我们尝试着在函数中使用与全局变量变量名一致的变量，看看会不会对全局变量造成影响。</p>
+<pre><code>a = <span class="number">100</span>
+
+<span class="function"><span class="keyword">def</span> <span class="title">foo</span><span class="params">()</span>:</span>
+    a = <span class="number">10</span>
+
+foo()
+<span class="keyword">print</span> a
+</code></pre><p>输出结果是：</p>
+<pre><code><span class="number">100</span>
+</code></pre><p>由此可见<code>foo</code>函数中的变量<code>a</code>和全局变量<code>a</code>是不同的变量。知道了这点，我们以后在编写函数的时候就可以放心大胆的使用变量名不用担心和全局变量冲突。</p>
+<p>那么我们怎么在函数中直接使用全局变量呢？这时候我们就需要使用<code>global</code>这个keyword。我们对之前的函数进行修改。</p>
+<pre><code><span class="function"><span class="keyword">def</span> <span class="title">foo</span><span class="params">()</span>:</span>
+    <span class="keyword">global</span> a
+    a = <span class="number">10</span>
+
+foo()
+<span class="keyword">print</span> a
+</code></pre><p>输出结果是</p>
+<pre><code><span class="number">10</span>
+</code></pre><p>这时候我们在<code>foo</code>函数中声明了<code>a</code>变量是全局变量。这样的话它就可以直接影响全局变量<code>a</code>了。本以为Python彻底的抹杀了变量声明的部分，结果还是不得不声明一下作用域。有一点需要注意的是，当我们声明一个变量是全局变量的时候。我们可以一次性同时声明多个变量，比如：</p>
+<pre><code>global <span class="tag">a</span>,<span class="tag">b</span>,c
+</code></pre><p>但是我们不能在声明的时候直接修改变量值，比如：</p>
+<pre><code><span class="built_in">global</span> <span class="operator">a</span> = <span class="number">10</span>
+</code></pre><p>这样的话系统会报错。我们必须将声明和赋值分开，比如：</p>
+<pre><code>global <span class="tag">a</span>
+<span class="tag">a</span> = <span class="number">10</span>
+</code></pre><p>这样有点小不方便，不得不多打一行代码。</p>
+<p>##封装</p>
+<p>还有一个使用全局变量的方法那就是封装。也就是把这些变量都放在一个module里面，这个很像是Java的作风。Java中所有的变量，函数全在Class中，所以不得不引入<code>static</code>这个keyword，但是python就随意的多了。</p>
+<p>首先我们新建一个module，<code>foo.py</code>。然后写入一个变量放在<code>foo.py</code>中，例如：</p>
+<pre><code><span class="tag">a</span> = <span class="number">100</span>
+</code></pre><p>然后我们直接运行python或者打开另一个module都可以，然后执行以下的命令：</p>
+<pre><code><span class="keyword">import</span> foo
+<span class="function"><span class="keyword">def</span> <span class="title">bar</span><span class="params">()</span>:</span>
+    <span class="keyword">print</span> foo.a
+
+bar()
+</code></pre><p>运行结果是：</p>
+<pre><code><span class="number">100</span>
+</code></pre><p>这样我们就在<code>bar</code>这个函数里面引用了module <code>foo.py</code>里面的变量<code>a</code>。其实我比较喜欢这种方法，特别是当这些全局变量使用率比较高的时候。封装起来又简洁又安全。</p>
+<p>##传值引用和传址引用</p>
+<p>Python的参数传递机制其实很好理解（跟Java一样），简单来说就传值。有的人可能会质疑说明明list和Object都是传址的啊。先别急，听我慢慢道来。</p>
+<p>其实所有的编程语言，变量机制都差不，大同小异。但是传递的时候有些语言会有特殊处理（比如C/C++），所以才会造成一些困扰。首先来说，每一个变量都会指向一个固定的内存地址，这个内存地址是在这个变量声明的时候就分配好了的，并且在这个变量的生命周期里面是不会改变的。</p>
+<p>那么这个地址里面存的是什么的？这里分为两种情况，像int，float，boolean这些数值，他们的尺寸非常小，也就几字节那么他们完全可以直接存在变量所指向的内存段内。也就是说这些类型的变量所指向的那段内存里面直接储存的变量值。</p>
+<p>另一种情况就是变量是list，Object这种，短短几个字节根本存不下。那么怎么办呢？系统需要为这些变量重新分别一个新的，更大的内存空间。而这个变量所指向的那段内存中储存的就是这个新空间的地址。换言之每一个变量的大小是固定的，比如4个字节或者8个字节（无论你的变量类型是什么）。如果是数值小的类型就用这几个字节保存下来，如果大就只保存地址就好了。</p>
+<p>那么当变量作为参数传递的时候系统会做什么呢？很简单，把变量所指向的那段内存中储存的东西传递出去就好了。如果储存的是数据，你传出去的就是数据；如果储存的是地址，那么传出去的就是地址。所以我才说归根结底都是传值，传的是变量储存的值。这样从本质上理解和记忆简单明朗的多。</p>
+<p>###参考文献</p>
+<ol>
+<li><a href="http://c.biancheng.net/cpp/html/1827.html" target="_blank" rel="external">Python函数中的局部变量和全局变量</a></li>
+<li><a href="http://www.douban.com/note/226827597/" target="_blank" rel="external">python中的传值和传引用</a></li>
+</ol>
+
+      
+    </div>
+    <footer>
+      
+        
+  
+  <div class="categories">
+    <a href="/categories/Programming-Languages/">Programming Languages</a>
+  </div>
+
+        
+  
+  <div class="tags">
+    <a href="/tags/Python/">Python</a>
+  </div>
+
+        
+  <div class="addthis addthis_toolbox addthis_default_style">
+    
+      <a class="addthis_button_facebook_like" fb:like:layout="button_count"></a>
+    
+    
+      <a class="addthis_button_tweet"></a>
+    
+    
+      <a class="addthis_button_google_plusone" g:plusone:size="medium"></a>
+    
+    
+      <a class="addthis_button_pinterest_pinit" pi:pinit:layout="horizontal"></a>
+    
+    <a class="addthis_counter addthis_pill_style"></a>
+  </div>
+  <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js"></script>
+
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+<section id="comment">
+  <h1 class="title">留言</h1>
+
+  
+      <div id="fb-root"></div>
+<script>
+  (function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=123456789012345";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));
+</script>
+
+<div class="fb-comments" data-href="http://binglispace.com/2015/01/18/python-global-variable/index.html" data-num-posts="5" data-width="840" data-colorscheme="light"></div>
+      
+  
+</section>
+
+</div></div>
+    <aside id="sidebar" class="alignright">
+  <div class="search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="搜索">
+    <input type="hidden" name="q" value="site:binglispace.com">
+  </form>
+</div>
+
+  
+<div class="widget tag">
+  <h3 class="title">分类</h3>
+  <ul class="entry">
+  
+    <li><a href="/categories/Equipment-Software-Reviews/">Equipment &amp; Software Reviews</a><small>4</small></li>
+  
+    <li><a href="/categories/Operating-Systems/">Operating Systems</a><small>2</small></li>
+  
+    <li><a href="/categories/Others/">Others</a><small>3</small></li>
+  
+    <li><a href="/categories/Programming-Languages/">Programming Languages</a><small>7</small></li>
+  
+  </ul>
+</div>
+
+
+  
+<div class="widget tag">
+  <h3 class="title">标签</h3>
+  <ul class="entry">
+  
+    <li><a href="/tags/Android-Wear/">Android Wear</a><small>1</small></li>
+  
+    <li><a href="/tags/Atom/">Atom</a><small>1</small></li>
+  
+    <li><a href="/tags/C/">C</a><small>1</small></li>
+  
+    <li><a href="/tags/Chrome/">Chrome</a><small>1</small></li>
+  
+    <li><a href="/tags/Fedora/">Fedora</a><small>2</small></li>
+  
+    <li><a href="/tags/GitHub/">GitHub</a><small>1</small></li>
+  
+    <li><a href="/tags/Hexo/">Hexo</a><small>2</small></li>
+  
+    <li><a href="/tags/IDE/">IDE</a><small>1</small></li>
+  
+    <li><a href="/tags/Linux/">Linux</a><small>1</small></li>
+  
+    <li><a href="/tags/Moto360/">Moto360</a><small>1</small></li>
+  
+    <li><a href="/tags/OpenMP/">OpenMP</a><small>1</small></li>
+  
+    <li><a href="/tags/Play-Framework/">Play Framework</a><small>1</small></li>
+  
+    <li><a href="/tags/Python/">Python</a><small>5</small></li>
+  
+    <li><a href="/tags/Scala/">Scala</a><small>2</small></li>
+  
+    <li><a href="/tags/Smart-Watch/">Smart Watch</a><small>1</small></li>
+  
+  </ul>
+</div>
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2015 Bing Li
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+</body>
+</html>

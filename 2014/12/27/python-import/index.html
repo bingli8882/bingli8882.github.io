@@ -1,0 +1,264 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>python学习笔记之import | Bing Li&#39;s Personal Blog</title>
+  <meta name="author" content="Bing Li">
+  
+  <meta name="description" content="随着计算机硬件水平的提升和计算机网络的普及，脚本语言在软件开发业的地位越来越高。这是计算机发展的一个必然趋势。当今的软件开发行业面临了许多难题，比如系统兼容性，开源等等问题。一方面，现在计算机操作系统已经不是以前的某一家独大的局面，Windows，Mac，Ios，Android，以及Linux的各种发行版，都进入了普通用户的家中。那么一个成功软件，就需要开发不同的版本以便于应对各种主流操作系统。另一方面，随着GitHub等开源社区的崛起，软件开源的呼声越来越强烈。因此脚本软件的优势便凸显了出来。">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="python学习笔记之import"/>
+  <meta property="og:site_name" content="Bing Li&#39;s Personal Blog"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="Bing Li&#39;s Personal Blog" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">Bing Li&#39;s Personal Blog</a></h1>
+  <h2><a href="/"></a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">Home</a></li>
+    
+      <li><a href="/archives">Archives</a></li>
+    
+      <li><a href="/about">About</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div></header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2014-12-28T00:18:39.000Z"><a href="/2014/12/27/python-import/">Dec 27 2014</a></time>
+      
+      
+  
+    <h1 class="title">python学习笔记之import</h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>随着计算机硬件水平的提升和计算机网络的普及，脚本语言在软件开发业的地位越来越高。这是计算机发展的一个必然趋势。当今的软件开发行业面临了许多难题，比如系统兼容性，开源等等问题。一方面，现在计算机操作系统已经不是以前的某一家独大的局面，Windows，Mac，Ios，Android，以及Linux的各种发行版，都进入了普通用户的家中。那么一个成功软件，就需要开发不同的版本以便于应对各种主流操作系统。另一方面，随着GitHub等开源社区的崛起，软件开源的呼声越来越强烈。因此脚本软件的优势便凸显了出来。</p>
+<a id="more"></a>
+<p>Java如此流行的一个原因就是对系统的兼容性非常高。通常来说，无论什么系统，只要安装了Java虚拟机，就可以运行Java程序。而Java的这一特性其实就是仿照脚本语言而来的。绝大多数的脚本语言都不需要编译或者预编译，执行的时候直接由解释器翻译运行。因此一个脚本语言的程序能否运行在某一系统上，这完全取决于这个系统是不是拥有此类语言的解释器。这与虚拟机的机制是相似的。而另一方面，脚本语言的程序就是它的源代码，所以也就无所谓开源闭源之说。你只要有这个程序就可以直接打开来看。</p>
+<p>而且计算机硬件性能的大幅度提升，导致脚本语言的运行速度也有了保障。因此在开发一些并不需要大量运算软件的时候，脚本语言简洁而高效的风格大大的缩短了开发的时间。还是以Java为例，Java的运行效率和C/C++比，永远无法超越，最多也就是无限接近。但是Java在非底层开发的时候越来越受人喜爱，就是因为开发周期段，易于维护。说白了，人力才是最珍惜的，计算机到底进行了多说运算，只要差距不大，谁也不会在乎。同样的，脚本语言比编译语言在这方面的优势更加明朗。因此学习并熟练掌握一门脚本语言势在必行。</p>
+<p>好了，言归正传，我接触过的编程语言可是不少，但是我最熟悉的还是Java，总的来说我还是很喜欢Java的，优点我就不多说了。可是最近要开发一个语言处理方面的项目。虽然Java也能干着事，但是自从看了Python的list之后，我发现用Python做Parser，开发效率可以甩Java半条街。举个例子：</p>
+<pre><code><span class="built_in">list</span> = [<span class="string">'a'</span>,<span class="string">'b'</span>,<span class="string">'c'</span>]
+<span class="keyword">if</span> something in <span class="built_in">list</span>:
+  <span class="preprocessor">#do something</span>
+</code></pre><p>这段代码用Java实现可是不是这么两三行能搞定的。另一方面身边研究AI的哥们都在用Python，虽然我不研究AI，但是不说跟国际接轨，起码要跟兄弟接轨吧。所以我就决定拾起数年前看过两眼的Python。</p>
+<hr>
+
+<p>写Python遇到的第一个可是说的上是问题的难题就是Python的import实在让人恶心啊。我仅仅是想引用一个父目录中的module，其过程的艰辛，然我觉得世界都不美好了。</p>
+<p>文件结构如下：</p>
+<ul>
+<li>root<ul>
+<li>__inin__.py</li>
+<li>moduleA.py</li>
+<li>subPackage<ul>
+<li>__init__.py</li>
+<li>moduleB.py</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>我想在<code>moduleB</code>里面引用<code>moduleA</code>里面的一个function，网上搜索的获得了很多方法，对于习惯了Java的孩子，我觉得哪一种都不适合我。好吧只能说我不适合Python吧，呵呵。</p>
+<p>第一种方法是：</p>
+<pre><code>from ..moduleA import <span class="function"><span class="keyword">func</span></span>
+</code></pre><p>或者有人说，最好从root开始引用，这样不会存在namespace冲突的问题，哎，还是Java好啊，上次遇到namespace的问题还是6年前研究C++的时候…从root开始引用的话就变成了：</p>
+<pre><code>from root.moduleA import <span class="function"><span class="keyword">func</span></span>
+</code></pre><p>然后我满心欢喜的运行：</p>
+<pre><code><span class="keyword">python</span> moduleB.<span class="keyword">py</span>
+</code></pre><p>结果，呵呵。</p>
+<pre><code><span class="string">ValueError:</span> Attempted relative <span class="keyword">import</span> <span class="keyword">in</span> non-<span class="keyword">package</span>
+</code></pre><p>我以为我是被eclipse和netbeans这些Java神级IDE宠坏了，从terminal直接运行在子目录下运行module怎么能行呢？Java也不行啊，所以经过反思，又从stackoverflow找了一些资料，回忆起我前几年第一次学Python的时候好像遇到过此类问题，当时我是这样解决的：</p>
+<pre><code>python -m root<span class="class">.subPackage</span><span class="class">.moduleB</span><span class="class">.py</span>
+</code></pre><p>然后也不知道是stackoverflow的答主说的不清楚，还是我的记忆缺失了，结果我又遇到了新问题：</p>
+<pre><code>Import <span class="keyword">by</span> filename <span class="keyword">is</span> <span class="keyword">not</span> supported.
+</code></pre><p>然后我早了很久也没有找到解决这个问题的方法，不知道是我的思路太孤僻一开始就选择了罕见的路线，还是这中间出现了什么问题，反正我是无解了。如果谁知道问题出在哪里，可以给我留言，请不吝赐教，谢谢。</p>
+<p>然后我只能走另一条比较常规的路线，那就是用<code>sys.path</code>。</p>
+<pre><code><span class="keyword">import</span> sys
+sys.path.<span class="built_in">append</span>(<span class="string">'..'</span>)
+from moduleA <span class="keyword">import</span> <span class="keyword">func</span>
+</code></pre><p>然后直接运行：</p>
+<pre><code><span class="keyword">python</span> moduleB.<span class="keyword">py</span>
+</code></pre><p>终于成功了，内牛满面！！！！</p>
+<p>一些人说不建议用相对路径，因为相对路径不稳定，不如使用绝对路径，也就是从系统的根目录 <code>/</code>开始，可是一方面我自己的程序不会动态删module，另一方面还是要保证可移植性。我不可能一直在家里开发，所以决定还是使用相对路径。不过不管怎么说，这个问题总算是解决了。</p>
+<p>（PS：打电话给某只一直使用python研究AI的哥们，问这问题的解决办法的时候，得知那孩子从来没有遇到过此类问题。原因是他一直吧所有的code都放在一个module里面……也许才是python的正确使用方法吧，用惯了Java的我一时无法接受……）</p>
+
+      
+    </div>
+    <footer>
+      
+        
+  
+  <div class="categories">
+    <a href="/categories/Programming-Languages/">Programming Languages</a>
+  </div>
+
+        
+  
+  <div class="tags">
+    <a href="/tags/Python/">Python</a>
+  </div>
+
+        
+  <div class="addthis addthis_toolbox addthis_default_style">
+    
+      <a class="addthis_button_facebook_like" fb:like:layout="button_count"></a>
+    
+    
+      <a class="addthis_button_tweet"></a>
+    
+    
+      <a class="addthis_button_google_plusone" g:plusone:size="medium"></a>
+    
+    
+      <a class="addthis_button_pinterest_pinit" pi:pinit:layout="horizontal"></a>
+    
+    <a class="addthis_counter addthis_pill_style"></a>
+  </div>
+  <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js"></script>
+
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+<section id="comment">
+  <h1 class="title">留言</h1>
+
+  
+      <div id="fb-root"></div>
+<script>
+  (function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=123456789012345";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));
+</script>
+
+<div class="fb-comments" data-href="http://binglispace.com/2014/12/27/python-import/index.html" data-num-posts="5" data-width="840" data-colorscheme="light"></div>
+      
+  
+</section>
+
+</div></div>
+    <aside id="sidebar" class="alignright">
+  <div class="search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="搜索">
+    <input type="hidden" name="q" value="site:binglispace.com">
+  </form>
+</div>
+
+  
+<div class="widget tag">
+  <h3 class="title">分类</h3>
+  <ul class="entry">
+  
+    <li><a href="/categories/Equipment-Software-Reviews/">Equipment &amp; Software Reviews</a><small>4</small></li>
+  
+    <li><a href="/categories/Operating-Systems/">Operating Systems</a><small>2</small></li>
+  
+    <li><a href="/categories/Others/">Others</a><small>3</small></li>
+  
+    <li><a href="/categories/Programming-Languages/">Programming Languages</a><small>7</small></li>
+  
+  </ul>
+</div>
+
+
+  
+<div class="widget tag">
+  <h3 class="title">标签</h3>
+  <ul class="entry">
+  
+    <li><a href="/tags/Android-Wear/">Android Wear</a><small>1</small></li>
+  
+    <li><a href="/tags/Atom/">Atom</a><small>1</small></li>
+  
+    <li><a href="/tags/C/">C</a><small>1</small></li>
+  
+    <li><a href="/tags/Chrome/">Chrome</a><small>1</small></li>
+  
+    <li><a href="/tags/Fedora/">Fedora</a><small>2</small></li>
+  
+    <li><a href="/tags/GitHub/">GitHub</a><small>1</small></li>
+  
+    <li><a href="/tags/Hexo/">Hexo</a><small>2</small></li>
+  
+    <li><a href="/tags/IDE/">IDE</a><small>1</small></li>
+  
+    <li><a href="/tags/Linux/">Linux</a><small>1</small></li>
+  
+    <li><a href="/tags/Moto360/">Moto360</a><small>1</small></li>
+  
+    <li><a href="/tags/OpenMP/">OpenMP</a><small>1</small></li>
+  
+    <li><a href="/tags/Play-Framework/">Play Framework</a><small>1</small></li>
+  
+    <li><a href="/tags/Python/">Python</a><small>5</small></li>
+  
+    <li><a href="/tags/Scala/">Scala</a><small>2</small></li>
+  
+    <li><a href="/tags/Smart-Watch/">Smart Watch</a><small>1</small></li>
+  
+  </ul>
+</div>
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2015 Bing Li
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+</body>
+</html>
