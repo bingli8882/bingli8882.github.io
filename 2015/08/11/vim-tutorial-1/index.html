@@ -3,20 +3,16 @@
 <head>
   <meta charset="utf-8">
   
-  <title>个人信息 | Bing Li&#39;s Personal Blog</title>
+  <title>Vim的技能点之基础操作 | Bing Li&#39;s Personal Blog</title>
   <meta name="author" content="Bing Li">
   
-  <meta name="description" content="姓名： 李冰
-年龄： 你猜
-Email： martinleo.li@gmail.com
-住址： 地球
-主页： 入口（纯手工打造Html+Css，做的不好大家别见笑）
-##时间轴|时间|事件||—|—||2014 - 今|博士在读，Georgia State University，懒得动地方了。||2">
+  <meta name="description" content="编辑器(Editor/IDE)，编程语言，和操作系统是天朝程序员茶余饭后的三大撕逼点。那天无聊在知乎上围观大家撕逼，事后和已经脱离学校去工业界的哥们儿聊天，问他平时都用什么编辑器。他说Java用Eclipse，其他的用Sublime。我问他为啥不用Vim？他说在服务器上的时候用Vim，其他时候不用，因为技能点不够。
+那时候我就在想，是不是有必要给Vim点一些技能点呢？虽说我现在没有需求，但是保不准以后会用到。所以我决定好好研究一下Vim的操作，然后将经验整理出来以备不时之需。">
   
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-  <meta property="og:title" content="个人信息"/>
+  <meta property="og:title" content="Vim的技能点之基础操作"/>
   <meta property="og:site_name" content="Bing Li&#39;s Personal Blog"/>
 
   
@@ -64,32 +60,49 @@ Email： martinleo.li@gmail.com
 </nav>
 <div class="clearfix"></div></header>
   <div id="content" class="inner">
-    <div id="main-col" class="alignleft"><div id="wrapper"><article class="page">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
   
   <div class="post-content">
     <header>
       
+        <div class="icon"></div>
+        <time datetime="2015-08-11T18:08:31.000Z"><a href="/2015/08/11/vim-tutorial-1/">Aug 11 2015</a></time>
+      
       
   
-    <h1 class="title">个人信息</h1>
+    <h1 class="title">Vim的技能点之基础操作</h1>
   
 
     </header>
     <div class="entry">
       
-        <p><strong>姓名</strong>： 李冰</p>
-<p><strong>年龄</strong>： 你猜</p>
-<p><strong>Email</strong>： martinleo.li@gmail.com</p>
-<p><strong>住址</strong>： 地球</p>
-<p><strong>主页</strong>： <a href="http://cs.gsu.edu/~bli6/index.html" target="_blank" rel="external">入口</a>（纯手工打造Html+Css，做的不好大家别见笑）</p>
-<p>##时间轴<br>|时间|事件|<br>|—|—|<br>|2014 - 今|博士在读，Georgia State University，懒得动地方了。|<br>|2012 - 2014|硕士，Georgia State University，终于不下雪了，内牛满面。|<br>|2007 - 2012|本科，Michigan Technological University，那是一个一年下9各月学的小镇。|<br>|2004 - 2007|又是苦命的三年高中，我觉得以后直接12年义务教育完了。|<br>|1995 - 2004|苦命的九年义务教育。|<br>|1988|出生，狮子座，不服来战。|</p>
+        <p>编辑器(Editor/IDE)，编程语言，和操作系统是天朝程序员茶余饭后的三大撕逼点。那天无聊在知乎上围观大家撕逼，事后和已经脱离学校去工业界的哥们儿聊天，问他平时都用什么编辑器。他说Java用Eclipse，其他的用Sublime。我问他为啥不用Vim？他说在服务器上的时候用Vim，其他时候不用，因为技能点不够。</p>
+<p>那时候我就在想，是不是有必要给Vim点一些技能点呢？虽说我现在没有需求，但是保不准以后会用到。所以我决定好好研究一下Vim的操作，然后将经验整理出来以备不时之需。<br><a id="more"></a></p>
+<p>安装啥的就不说了，Windows，Mac，和Linux都可以安装。但是相对来说，Unix/Linux上面的配置与操作都有要比Windows简单些，而且多数情况都是在服务器上面操作，所以还是建议大家在Unix/Linux上面学习和使用。</p>
+<p>Vim自带一个不错的入门教程，如果已经安装好了Vim，那么在terminal下输入<code>vimtutor</code>就可以进入教程。其实所谓的教程就是一个用vim打开的文本文件，按照上面所说的内容就可以大概的掌握vim的基本操作。</p>
+<p>Vim有三个基本模式，normal,insert,和visual。Normal模式就是对编辑器的各种基本操作，比如查找，定位什么的。在这个模式下，用户并不对文本进行大量修改只是偶尔删除几个字或者行，替换几个字母什么的。</p>
+<p>Normal模式下几个最常用的快捷键是：<br>h,j,k,l - 光标的左下上右<br>i - 当前光标位置进入insert模式<br>a - 当前光标之后的位置进入insert模式<br>v - 当前光标进入visual模式</p>
+<p>Insert模式就是平时的编辑模式，正常输入文本。Visual模式就是用来选择文本进行复制粘接等操作的。</p>
+<p>y - 复制选定文本<br>d - 剪切</p>
+<p>更多的快捷键说明，可以从这个<a href="http://vim.rtorr.com/lang/zh_cn/" target="_blank" rel="external">网站</a>找到。</p>
+<p>值得一提的是，任何状态下按esc键可以退回normal模式，在normal模式下按下<code>:</code>之后可以输入命令。比如：<br>:q - 退出当前文本。<br>:q! - 强制退出当前文本，不保存<br>:w - 保存当前文本<br>:wq - 保存后退出</p>
 
       
     </div>
     <footer>
       
         
+  
+  <div class="categories">
+    <a href="/categories/Equipment-Software-Reviews/">Equipment & Software Reviews</a>
+  </div>
+
         
+  
+  <div class="tags">
+    <a href="/tags/Vim/">Vim</a>
+  </div>
+
         
   <div class="addthis addthis_toolbox addthis_default_style">
     
@@ -130,7 +143,7 @@ Email： martinleo.li@gmail.com
   }(document, 'script', 'facebook-jssdk'));
 </script>
 
-<div class="fb-comments" data-href="http://binglispace.com/about/index.html" data-num-posts="5" data-width="840" data-colorscheme="light"></div>
+<div class="fb-comments" data-href="http://binglispace.com/2015/08/11/vim-tutorial-1/index.html" data-num-posts="5" data-width="840" data-colorscheme="light"></div>
       
   
 </section>
