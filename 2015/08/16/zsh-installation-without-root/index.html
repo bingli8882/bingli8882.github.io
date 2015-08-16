@@ -3,17 +3,15 @@
 <head>
   <meta charset="utf-8">
   
-  <title>imgur图床测试 | Bing Li&#39;s Personal Blog</title>
+  <title>Linux上无root安装zsh | Bing Li&#39;s Personal Blog</title>
   <meta name="author" content="Bing Li">
   
-  <meta name="description" content="For best performance, we recommend repositories be kept under 1GB each. This limit is easy to stay within if large files (typically, binaries) are kept out of the repository. If your repository exceeds 1GB, you might receive a polite email from support requesting that you reduce the size of the repository to bring it back down under 1GB.From
-
-好吧，GitHub Pages看来也有这么一个1GB的容量限制。不过这样才比较合理，当初我刚刚知道这网站的时候我还想把他开发成网盘呢。">
+  <meta name="description" content="以后要是有时间有精力一定要用Python或者直接用shell脚本写一个非root用户软件管理系统！因为没有root权限装软件太蛋疼了。什么什么？你说Linuxbrew？想用Linuxbrew首先你用的系统里要有Ruby，没有的话并且你也没有root权限的话，呵呵。而且上次千辛万苦的装上了ruby和linuxbrew，在使用的时候居然说我gcc有问题，然后我就直接放弃了。所以最后也只能手动装软件。">
   
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-  <meta property="og:title" content="imgur图床测试"/>
+  <meta property="og:title" content="Linux上无root安装zsh"/>
   <meta property="og:site_name" content="Bing Li&#39;s Personal Blog"/>
 
   
@@ -61,49 +59,47 @@
 </nav>
 <div class="clearfix"></div></header>
   <div id="content" class="inner">
-    <div id="main-col" class="alignleft"><div id="wrapper"><article class="photo">
-  
-    <div class="gallery">
-  <div class="photoset">
-    
-      
-        <img src="http://i.imgur.com/Z2GU5KO.jpg">
-      
-    
-  </div>
-  <div class="control">
-    <div class="prev"></div>
-    <div class="next"></div>
-  </div>
-</div>
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
   
   <div class="post-content">
     <header>
       
         <div class="icon"></div>
-        <time datetime="2014-12-26T06:41:04.000Z"><a href="/2014/12/26/imgur-test/">Dec 26 2014</a></time>
+        <time datetime="2015-08-16T15:11:57.000Z"><a href="/2015/08/16/zsh-installation-without-root/">Aug 16 2015</a></time>
       
       
   
-    <h1 class="title">imgur图床测试</h1>
+    <h1 class="title">Linux上无root安装zsh</h1>
   
 
     </header>
     <div class="entry">
       
-        <blockquote>
-<p>For best performance, we recommend repositories be kept under 1GB each. This limit is easy to stay within if large files (typically, binaries) are kept out of the repository. If your repository exceeds 1GB, you might receive a polite email from support requesting that you reduce the size of the repository to bring it back down under 1GB.<br><a href="https://help.github.com/articles/what-is-my-disk-quota/" target="_blank" rel="external">From</a></p>
-</blockquote>
-<p>好吧，GitHub Pages看来也有这么一个1GB的容量限制。不过这样才比较合理，当初我刚刚知道这网站的时候我还想把他开发成网盘呢。<br><a id="more"></a><br>1GB的空间对于写博客来说还是足够大的，当然不算图片和其他多媒体文件的储存问题。现在的图片动不动就好几MB，这样算算1GB的空间根本贴不了多少图。我倒是不打算把博客开发成相册，但是图片或多或少总还是会有的。</p>
-<p>这是一个Common Problem，大家都有这个问题。于是乎合理选择图床变成为了一个迫在眉睫的问题。选择还是很多的，但是限制比较多。我理想中的图床应该有如下几个特点。</p>
-<ul>
-<li>容量足够大，就是因为Github的储存空间有限才需要考虑图床的问题。</li>
-<li>速度够快，不说一定要瞬间载入，但是起码不能等半年。</li>
-<li>免费而且限制不能太夸张，很多网站都有流量限制，虽说我不觉得会有很多人看我的博客，可是未雨绸缪的意识还是要有的。所以这个限制不能太夸张。至于免费，大家都懂的，既然都用GitHub Page了，肯定是不想掏钱租服务器了。</li>
-<li>不能被墙，其实如果不考虑墙的问题，选择图床根本就不是问题，Dropbox，Google Drive，可供选的东西多种多样，但是既然开了中文博客，当然要面向国内的读者们。所以墙是个大问题。</li>
-</ul>
-<p>其实国内有很多可选的图床，七牛（非要我验证手机，我哪里来的国内手机啊。），百度相册什么的（有水印），都是不错的选择，虽然有点小瑕疵。然后我用了一种非常无赖的做法，那就是随便Google一个博客，看它用什么图床，于是乎我就找到了<a href="http://imgur.com/" target="_blank" rel="external">imgur</a>。</p>
-<p>博主们对他褒贬不一，而且国外的服务器都有被墙的风险。所以我就先发一个测试贴在这里，以后没事就看看图片是不是还在。要是挂啦我在想别的办法。</p>
+        <p>以后要是有时间有精力一定要用Python或者直接用shell脚本写一个非root用户软件管理系统！因为没有root权限装软件太蛋疼了。什么什么？你说Linuxbrew？想用Linuxbrew首先你用的系统里要有Ruby，没有的话并且你也没有root权限的话，呵呵。而且上次千辛万苦的装上了ruby和linuxbrew，在使用的时候居然说我gcc有问题，然后我就直接放弃了。所以最后也只能手动装软件。<br><a id="more"></a></p>
+<p>这次要装的软件是<a href="http://www.zsh.org" target="_blank" rel="external">zsh</a>，一款shell。至于为什么，说好听的是因为我本地计算机上用的就是zsh，在服务器上装会和本地取得一致的体验。可实际上就是觉得bash默认的界面太丑，而且又懒得手动配置，所以装个zsh然后用oh-my-zsh配置比较方便。</p>
+<p>安装zsh的方法如下：</p>
+<ol>
+<li><p>下载zsh</p>
+<pre><code><span class="built_in">mkdir</span> ~/tmp
+<span class="built_in">cd</span> ~/tmp
+wget http://sourceforge.<span class="winutils">net</span>/projects/zsh/files/zsh/<span class="number">5</span>.<span class="number">0</span>.<span class="number">7</span>/zsh-<span class="number">5</span>.<span class="number">0</span>.<span class="number">7</span>.tar.gz/download
+</code></pre></li>
+<li><p>解压缩</p>
+<pre><code><span class="tag">tar</span> <span class="tag">xzvf</span> <span class="tag">zsh-5</span><span class="class">.0</span><span class="class">.7</span><span class="class">.tar</span><span class="class">.gz</span>
+</code></pre></li>
+<li><p>编译安装</p>
+<pre><code>cd ~/tmp/zsh-<span class="number">5.0</span>.<span class="number">7</span>
+./configure --prefix=<span class="variable">$HOME</span>
+make
+make install
+</code></pre></li>
+</ol>
+<p>其实很多软件比如zsh或者是ruby都可以通过修改prefix来更改安装路径。只要是安装在<code>$HOME</code>下的，就不需要root权限。</p>
+<p>安装完zsh，接着就是安装<a href="http://ohmyz.sh" target="_blank" rel="external">oh my zsh</a>，这个本来就不需要root，所以不需要什么特殊操作。</p>
+<pre><code>wget http<span class="variable">s:</span>//raw.github.<span class="keyword">com</span>/robbyrussell/oh-my-zsh/master/tools/install.<span class="keyword">sh</span> -O - | <span class="keyword">sh</span>
+</code></pre><p>最后就是设置成默认的shell。<code>chsh</code>这个命令是不能用了，因为没有root权限，所以只能在.bash_profile里面做手脚了。在.bash_profile里面添加如下内容：</p>
+<pre><code>exec <span class="variable">$HOME</span>/bin/zsh -l
+</code></pre><p>好了现在ssh连接到服务器上就变了zsh了。</p>
 
       
     </div>
@@ -112,13 +108,13 @@
         
   
   <div class="categories">
-    <a href="/categories/Others/">Others</a>
+    <a href="/categories/Equipment-Software-Reviews/">Equipment & Software Reviews</a>
   </div>
 
         
   
   <div class="tags">
-    <a href="/tags/Hexo/">Hexo</a>
+    <a href="/tags/Zsh/">Zsh</a>
   </div>
 
         
@@ -161,7 +157,7 @@
   }(document, 'script', 'facebook-jssdk'));
 </script>
 
-<div class="fb-comments" data-href="http://binglispace.com/2014/12/26/imgur-test/index.html" data-num-posts="5" data-width="840" data-colorscheme="light"></div>
+<div class="fb-comments" data-href="http://binglispace.com/2015/08/16/zsh-installation-without-root/index.html" data-num-posts="5" data-width="840" data-colorscheme="light"></div>
       
   
 </section>
