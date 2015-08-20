@@ -3,15 +3,16 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Windows 8 手动更新 Windows 10 | Bing Li&#39;s Personal Blog</title>
+  <title>Linux上无root安装Python | Bing Li&#39;s Personal Blog</title>
   <meta name="author" content="Bing Li">
   
-  <meta name="description" content="虽然说现在Windows对于我来说意义已经不是很大了，我平时的工作都是在Linux和新买Mac上进行的，但是偶尔也会用Windows玩玩游戏，而且这个频率现在时越来越低。之前Windows之所以难以割舍，主要还是因为需要用到office这个神器，可是自从买了Mac，这个需求也没了。前天去BestBuy逛，看到新版的Windows 10好像挺漂亮的，而且Windows 8可以免费升级，所以就想给电脑升级一下就当重装系统了。可是Windows 10发布也有几天了，迟迟没有收到更新的通知，所以就只能自己动手丰衣足食了。">
+  <meta name="description" content="昨天一道闪电把学校劈的停电了。然后系里的服务器直接down了。鬼知道为啥他们没有给服务器装应急电源。估计是觉得学生用的服务器不值得吧。然后鬼畜的事情发生了，我自己装的zsh、vim的插件，还有帮同学装的Python全都挂了。太奇葩了，难道这些都装到了内存里？而且最晚的也是一周前装好的，难道可以缓存这么久？
+哎，没有办法只能自己慢慢装回来。介于需要装Python的同学太多（系统自带的Python版本是2.6，同学们想要2.7），我不可能一个一个帮忙装，同时也是为了预防将来再有此类事件发生，所以我就把无root安装Python的方法整理出来。">
   
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-  <meta property="og:title" content="Windows 8 手动更新 Windows 10"/>
+  <meta property="og:title" content="Linux上无root安装Python"/>
   <meta property="og:site_name" content="Bing Li&#39;s Personal Blog"/>
 
   
@@ -65,35 +66,51 @@
     <header>
       
         <div class="icon"></div>
-        <time datetime="2015-08-06T02:49:46.000Z"><a href="/2015/08/05/win10-installation/">Aug 5 2015</a></time>
+        <time datetime="2015-08-20T00:18:46.000Z"><a href="/2015/08/19/python-installation-without-root/">Aug 19 2015</a></time>
       
       
   
-    <h1 class="title">Windows 8 手动更新 Windows 10</h1>
+    <h1 class="title">Linux上无root安装Python</h1>
   
 
     </header>
     <div class="entry">
       
-        <p>虽然说现在Windows对于我来说意义已经不是很大了，我平时的工作都是在Linux和新买Mac上进行的，但是偶尔也会用Windows玩玩游戏，而且这个频率现在时越来越低。之前Windows之所以难以割舍，主要还是因为需要用到office这个神器，可是自从买了Mac，这个需求也没了。前天去BestBuy逛，看到新版的Windows 10好像挺漂亮的，而且Windows 8可以免费升级，所以就想给电脑升级一下就当重装系统了。可是Windows 10发布也有几天了，迟迟没有收到更新的通知，所以就只能自己动手丰衣足食了。<br><a id="more"></a></p>
-<p>手动升级的方法其实很简单，只是有一些小的细节需要注意。主要步骤如下：</p>
+        <p>昨天一道闪电把学校劈的停电了。然后系里的服务器直接down了。鬼知道为啥他们没有给服务器装应急电源。估计是觉得学生用的服务器不值得吧。然后鬼畜的事情发生了，我自己装的zsh、vim的插件，还有帮同学装的Python全都挂了。太奇葩了，难道这些都装到了内存里？而且最晚的也是一周前装好的，难道可以缓存这么久？</p>
+<p>哎，没有办法只能自己慢慢装回来。介于需要装Python的同学太多（系统自带的Python版本是2.6，同学们想要2.7），我不可能一个一个帮忙装，同时也是为了预防将来再有此类事件发生，所以我就把无root安装Python的方法整理出来。<br><a id="more"></a></p>
 <ol>
-<li><p>获取Windows 10安装文件</p>
-<p> 安装文件的ISO可以从官网<a href="https://www.microsoft.com/en-us/software-download/windows10ISO" target="_blank" rel="external">下载</a>。选择下载Windows 10的ISO即可，安装时会根据你当前的系统自动升级成为home或者pro的版本。</p>
-</li>
-<li><p>准备安装</p>
-<p> 有了ISO之后我们就可以把它刻录成DVD。有一点需要注意，我们是不可以用这个DVD引导安装的，因为我们是升级安装。虽然我听说有的版本的ISO是可以从DVD引导升级安装的，但是我下载的版本选择升级的时候，安装程序提示我要用Windows引导安装。因此我们只能重新以正常方式进入Windows然后双击DVD里面的安装程序开始升级。</p>
-<p> 这里我们可以发现，因为是在Windows内安装的，所以并不需要刻录成DVD。完全可以直接解压ISO文件到某文件夹（推荐在C盘根目录或者C盘以外创建文件夹，C盘是指当前Windows所在的硬盘），然后直接打开安装程序安装。</p>
-</li>
-<li><p>安装Windows</p>
-<p> 安装过程很简单一路按照提示进行即可。因为我是本着重装系统的目的安装的，所以我选择了不保留任何文件。这样的话Windows会把所有的系统文件夹全都移动到Windows.old这个文件夹里面。然后安装新的系统文件，这里我们先不要管它。先根据提示一路安装下去再说。有人会问既然不想保留之前的文件，为什么不格式化重新安装呢？原因是我们这时候并没有Windows 10的cdkey，安装完无法激活，所以只能通过升级安装的方法安装。</p>
-</li>
-<li><p>安装之后</p>
-<p> 和Windows 8一样，输入Microsoft的账号登陆系统。现在大家应该可以看到Windows 10漂亮的桌面了。安装完之后我们需要检查驱动程序的安装情况。可是我花了十几分钟的时间也没有找的控制面板在何方。太蛋疼了。最后我的方法是：开始菜单-&gt;setting然后在setting里面搜索control panel，然后才找到。也许有更简单的方法，但是请自行开发。找到缺失驱动的硬件，然后手动安装驱动，这里就不细说了。</p>
-<p> 那个Windows.old的文件，我们是没有办法直接删除的。需要右键点击C盘-&gt;属性-&gt;磁盘清理，然后清理系统文件，最后选择之前的Windows版本开始清理。</p>
-</li>
+<li><p>下载Python</p>
+<p> 到Python的官方网站找到所需要的Python文件。没办法Linux需要本地编译，所以只能下载source文件。</p>
+<pre><code><span class="built_in">mkdir</span> ~/tmp
+<span class="keyword">cd</span> ~/tmp
+wget http<span class="variable">s:</span>//www.<span class="keyword">python</span>.org/ftp/<span class="keyword">python</span>/<span class="number">2.7</span>.<span class="number">10</span>/Python-<span class="number">2.7</span>.<span class="number">10</span>.tgz
+</code></pre></li>
+<li><p>解压缩</p>
+<pre><code><span class="tag">tar</span> <span class="tag">xzvf</span> <span class="tag">Python-2</span><span class="class">.7</span><span class="class">.10</span><span class="class">.tgz</span>
+</code></pre></li>
+<li><p>设置prefix</p>
+<p> 把程序装在HOME里面就不用root全新，所以在此我们需要设置prefix</p>
+<pre><code>cd Python-<span class="number">2.7</span>.<span class="number">10</span>
+./configure --prefix=<span class="variable">$HOME</span>
+</code></pre></li>
+<li><p>安装</p>
+<pre><code><span class="built_in">make</span>
+<span class="built_in">make</span> install
+</code></pre></li>
+<li><p>替代系统的Python</p>
+<p> 在<code>.bashrc</code>或者<code>.zshrc</code>中添加下面一行：</p>
+<pre><code><span class="keyword">alias</span> <span class="keyword">python</span>=<span class="string">'~/bin/python'</span>
+</code></pre></li>
 </ol>
+<p>到这里Python就安装完了，退出后重新进入服务器，输入python命令开启的就是刚刚安装的Python了。</p>
+<h3 id="附录：安装pip">附录：安装pip</h3><pre><code>    <span class="keyword">cd</span> ~/tmp
+    wget http<span class="variable">s:</span>//bootstrap.pypa.io/<span class="built_in">get</span>-pip.<span class="keyword">py</span>
+    <span class="keyword">python</span> <span class="built_in">get</span>-pip.<span class="keyword">py</span>
 
+这是可以试着装一下numpy
+
+    pip install numpy
+</code></pre>
       
     </div>
     <footer>
@@ -101,13 +118,13 @@
         
   
   <div class="categories">
-    <a href="/categories/Operating-Systems/">Operating Systems</a>
+    <a href="/categories/Equipment-Software/">Equipment & Software</a>
   </div>
 
         
   
   <div class="tags">
-    <a href="/tags/Windows-10/">Windows 10</a>
+    <a href="/tags/Python/">Python</a>
   </div>
 
         
