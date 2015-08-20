@@ -80,7 +80,7 @@
 <p>哎，没有办法只能自己慢慢装回来。介于需要装Python的同学太多（系统自带的Python版本是2.6，同学们想要2.7），我不可能一个一个帮忙装，同时也是为了预防将来再有此类事件发生，所以我就把无root安装Python的方法整理出来。<br><a id="more"></a></p>
 <ol>
 <li><p>下载Python</p>
-<p> 到Python的官方网站找到所需要的Python文件。没办法Linux需要本地编译，所以只能下载source文件。</p>
+<p> 到Python的官方网站找到所需要的Python文件。没办法Linux下的python需要本地编译，所以只能下载source文件。</p>
 <pre><code><span class="built_in">mkdir</span> ~/tmp
 <span class="keyword">cd</span> ~/tmp
 wget http<span class="variable">s:</span>//www.<span class="keyword">python</span>.org/ftp/<span class="keyword">python</span>/<span class="number">2.7</span>.<span class="number">10</span>/Python-<span class="number">2.7</span>.<span class="number">10</span>.tgz
@@ -89,7 +89,7 @@ wget http<span class="variable">s:</span>//www.<span class="keyword">python</spa
 <pre><code><span class="tag">tar</span> <span class="tag">xzvf</span> <span class="tag">Python-2</span><span class="class">.7</span><span class="class">.10</span><span class="class">.tgz</span>
 </code></pre></li>
 <li><p>设置prefix</p>
-<p> 把程序装在HOME里面就不用root全新，所以在此我们需要设置prefix</p>
+<p> 把程序装在HOME里面就不用root权限，所以在此我们需要设置prefix</p>
 <pre><code>cd Python-<span class="number">2.7</span>.<span class="number">10</span>
 ./configure --prefix=<span class="variable">$HOME</span>
 </code></pre></li>
