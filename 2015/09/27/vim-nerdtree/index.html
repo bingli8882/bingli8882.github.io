@@ -3,13 +3,16 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Python | Bing Li&#39;s Personal Blog</title>
+  <title>Vim的技能点之NERDTree | Bing Li&#39;s Personal Blog</title>
   <meta name="author" content="Bing Li">
+  
+  <meta name="description" content="Nerdtree 是一款常用的Vim文件导航栏插件。安装方法有很多，根据大家自己选用的插件管理软件而各不相同。vundle的安装方法是：
+Plugin &#39;scrooloose/nerdtree&#39;">
   
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-  
+  <meta property="og:title" content="Vim的技能点之NERDTree"/>
   <meta property="og:site_name" content="Bing Li&#39;s Personal Blog"/>
 
   
@@ -57,85 +60,97 @@
 </nav>
 <div class="clearfix"></div></header>
   <div id="content" class="inner">
-    <div id="main-col" class="alignleft"><div id="wrapper">
-<h2 class="archive-title tag">Python</h2>
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2015-09-27T19:52:57.000Z"><a href="/2015/09/27/vim-nerdtree/">Sep 27 2015</a></time>
+      
+      
+  
+    <h1 class="title">Vim的技能点之NERDTree</h1>
+  
 
+    </header>
+    <div class="entry">
+      
+        <p>Nerdtree 是一款常用的Vim文件导航栏插件。安装方法有很多，根据大家自己选用的插件管理软件而各不相同。<code>vundle</code>的安装方法是：</p>
+<pre><code><span class="title">Plugin</span> <span class="string">'scrooloose/nerdtree'</span>
+</code></pre><a id="more"></a>
+<p>安装完之后启动 vim ，Nerdtree 并不会自动显示出来。可以通过 <code>NERDTree</code> 命令来启动 NERDTree窗口。</p>
+<p>在 NerdTree 窗口中用<code>o</code>来打开所选文件或者文件夹。如果需要创建或者删除文件可以用<code>m</code>来打开菜单。</p>
+<p>如果你需要NerdTree窗口默认显示，可以在.vimrc中添加以下代码：</p>
+<pre><code>autocmd VimEnter <span class="keyword">*</span> NERDTree
+</code></pre><p>这样做之后我遇到了两个问题。第一个就是每次开启Vim光标都在NerdTree窗口中，然后我不得不用<code>ctrl+w</code>来切换到工作窗口。每次都这样有点繁琐，所以我们可以通过添加如下代码来自动切换到工作窗口。</p>
+<pre><code><span class="keyword">autocmd</span> VimEnter * <span class="keyword">wincmd</span> <span class="keyword">p</span>
+</code></pre><p>这样每次启动vim，光标就在工作窗口中了。</p>
+<p>第二个问题是，我在git中，设置的默认editor是vim，每次commit都会启动带有NerdTree的vim比较浪费。我们可以通过修改gitconfig来屏蔽vim插件。</p>
+<pre><code>git config —<span class="keyword">global</span> core.editor ‘vim - -noplugin<span class="operator">'</span>
+</code></pre><p>但是因为之前我们在.vimrc中使用了 <code>NERDTree</code> 命令，所以屏蔽之后会报错。虽然不影响使用，但是每次启动都报错也很恶心。所以我们可以修改 NerdTree 的启动方式，让他有选择的启动。比如仅在没有输入文件的时候启动。</p>
+<pre><code>autocmd VimEnter <span class="keyword">*</span> if !argc() |<span class="string"> NERDTree </span>|<span class="string"> endif</span>
+</code></pre><p>这样有输入文件的时候就不会启动NerdTree窗口了，git commit的时候也不会启动。其实在有文件输入的时候，多数情况下我们也不需要它。</p>
 
-  <div class="archive">
-    
-      <article class="post">
-        <div class="post-content">
-          <header>
-            <div class="icon"></div>
-            <time datetime="2015-08-20T00:18:46.000Z"><a href="/2015/08/19/python-installation-without-root/">Aug 19 2015</a></time>
-            
-              <h1 class="title"><a href="/2015/08/19/python-installation-without-root/">Linux上无root安装Python</a></h1>
-            
-          </header>
-        </div>
-      </article>
-    
-      <article class="post">
-        <div class="post-content">
-          <header>
-            <div class="icon"></div>
-            <time datetime="2015-02-18T02:56:01.000Z"><a href="/2015/02/17/python-to-scala/">Feb 17 2015</a></time>
-            
-              <h1 class="title"><a href="/2015/02/17/python-to-scala/">开始用Scala重构代码</a></h1>
-            
-          </header>
-        </div>
-      </article>
-    
-      <article class="post">
-        <div class="post-content">
-          <header>
-            <div class="icon"></div>
-            <time datetime="2015-01-19T03:41:27.000Z"><a href="/2015/01/18/python-global-variable/">Jan 18 2015</a></time>
-            
-              <h1 class="title"><a href="/2015/01/18/python-global-variable/">python学习笔记之全局变量</a></h1>
-            
-          </header>
-        </div>
-      </article>
-    
-      <article class="post">
-        <div class="post-content">
-          <header>
-            <div class="icon"></div>
-            <time datetime="2015-01-06T04:10:03.000Z"><a href="/2015/01/05/Python-func-parameter/">Jan 5 2015</a></time>
-            
-              <h1 class="title"><a href="/2015/01/05/Python-func-parameter/">Python学习笔记值函数与参量</a></h1>
-            
-          </header>
-        </div>
-      </article>
-    
-      <article class="post">
-        <div class="post-content">
-          <header>
-            <div class="icon"></div>
-            <time datetime="2015-01-03T20:26:55.000Z"><a href="/2015/01/03/python-list-eq/">Jan 3 2015</a></time>
-            
-              <h1 class="title"><a href="/2015/01/03/python-list-eq/">python学习笔记之list和__eq__</a></h1>
-            
-          </header>
-        </div>
-      </article>
-    
-      <article class="post">
-        <div class="post-content">
-          <header>
-            <div class="icon"></div>
-            <time datetime="2014-12-28T00:18:39.000Z"><a href="/2014/12/27/python-import/">Dec 27 2014</a></time>
-            
-              <h1 class="title"><a href="/2014/12/27/python-import/">python学习笔记之import</a></h1>
-            
-          </header>
-        </div>
-      </article>
-    
+      
+    </div>
+    <footer>
+      
+        
+  
+  <div class="categories">
+    <a href="/categories/Equipment-Software/">Equipment & Software</a>
   </div>
+
+        
+  
+  <div class="tags">
+    <a href="/tags/Vim/">Vim</a>
+  </div>
+
+        
+  <div class="addthis addthis_toolbox addthis_default_style">
+    
+      <a class="addthis_button_facebook_like" fb:like:layout="button_count"></a>
+    
+    
+      <a class="addthis_button_tweet"></a>
+    
+    
+      <a class="addthis_button_google_plusone" g:plusone:size="medium"></a>
+    
+    
+      <a class="addthis_button_pinterest_pinit" pi:pinit:layout="horizontal"></a>
+    
+    <a class="addthis_counter addthis_pill_style"></a>
+  </div>
+  <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js"></script>
+
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+<section id="comment">
+<!-- Duoshuo Comment BEGIN -->
+<div class="ds-thread"></div>
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"bingli8882"};
+(function() {
+  var ds = document.createElement('script');
+  ds.type = 'text/javascript';ds.async = true;
+  ds.src = 'http://static.duoshuo.com/embed.js';
+  ds.charset = 'UTF-8';
+  (document.getElementsByTagName('head')[0]
+  || document.getElementsByTagName('body')[0]).appendChild(ds);
+})();
+</script>
+<!-- Duoshuo Comment END -->
+</section>
+
+
 </div></div>
     <aside id="sidebar" class="alignright">
   <div class="search">
